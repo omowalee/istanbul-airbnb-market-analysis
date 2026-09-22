@@ -1,0 +1,14 @@
+# Python
+venv/
+.venv/
+__pycache__/
+
+# Ham veri
+data/
+
+# Gizli bilgiler
+*.json
+.env
+
+# Log dosyaları
+logs/
