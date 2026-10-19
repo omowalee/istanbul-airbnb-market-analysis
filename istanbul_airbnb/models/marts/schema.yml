@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: dim_listing
+    description: "Haziran 2026 aktif kısa dönem havuzundaki 14.886 ilanın tüm boyutlarını (konum, host segmenti, puan grubu, izin durumu, takvim penceresi, olanaklar ve dönemsel fiyat değişimi) içeren ana fiziksel tablo."
+    columns:
+      - name: listing_id
+        description: "Tekil ilan kimliği."
+        tests:
+          - unique
+          - not_null
+      - name: price
+        description: "Gecelik fiyat (TL)."
+        tests:
+          - not_null
+      - name: room_type
+        tests:
+          - not_null
+      - name: neighbourhood
+        tests:
+          - not_null
+
+  - name: dim_host
+    description: "Haziran 2026 aktif kısa dönem havuzundaki ev sahiplerinin (host) portföy ve gelir özeti tablosu."
+    columns:
+      - name: host_id
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_neighbourhood_kpis
+    description: "Semt (neighbourhood) ve oda tipi (room_type) bazında ilan sayısı, medyan fiyat, doluluk, gelir, izin durumu ve olanak oranlarını özetleyen mart tablosu."
+    columns:
+      - name: neighbourhood_room_key
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_pricing_behavior
+    description: "Oda tipi, Mart->Haziran fiyatlama davranışı, dinamik minimum gece kuralı ve manzara kategorisine göre performans metriklerini özetleyen mart tablosu."
+    columns:
+      - name: pricing_behavior_key
+        tests:
+          - unique
+          - not_null
