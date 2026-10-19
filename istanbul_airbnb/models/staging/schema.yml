@@ -75,3 +75,14 @@ models:
         description: "Yorumun yapıldığı ilan kimliği."
       - name: review_date
         description: "Yorum tarihi."
+
+  - name: stg_neighbourhoods
+    description: "İstanbul'un 39 ilçesinin GeoJSON poligon sınırları, yüzölçümü (area_km2) ve yaka (Avrupa/Anadolu) bilgisi."
+    columns:
+      - name: neighbourhood
+        tests:
+          - unique
+          - not_null
+      - name: city_side
+        tests:
+          - not_null

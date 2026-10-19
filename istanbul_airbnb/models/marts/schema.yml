@@ -43,3 +43,19 @@ models:
         tests:
           - unique
           - not_null
+
+  - name: mart_neighbourhood_demographics_complaints
+    description: "Semt ve puan grubu bazında turist profili paylarını (Batı, Türkçe, Kiril, Arapça, Doğu Asya) ve 100 yorum başına şikayet sıklıklarını özetleyen mart tablosu."
+    columns:
+      - name: neighbourhood_rating_key
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_market_churn
+    description: "Eylül 2025'teki 30.051 ilanın Haziran 2026'daki akıbetini (kısa dönemde kaldı, 100+ gün uzun döneme geçti, pasife düştü, platformdan silindi) özetleyen mart tablosu."
+    columns:
+      - name: churn_cohort_key
+        tests:
+          - unique
+          - not_null

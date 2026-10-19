@@ -69,3 +69,19 @@ models:
       - name: host_id
         tests:
           - not_null
+
+  - name: int_listing_location_features
+    description: "Her ilan için en yakın raylı sistem (Metro/Tramvay/Marmaray) istasyonu mesafesini ve ilan başlığındaki Taksim/Sultanahmet iddialarının doğruluk durumunu hesaplar."
+    columns:
+      - name: listing_snapshot_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int_listing_review_insights
+    description: "Haziran 2026 yorumlarından alfabe/dil bazlı turist profilini ve şikayet anahtar kelimelerini (temizlik, koku, gürültü, merdiven, fotoğraf, tesisat) ilan bazında sayar."
+    columns:
+      - name: listing_id
+        tests:
+          - unique
+          - not_null

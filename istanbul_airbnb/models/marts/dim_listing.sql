@@ -33,6 +33,14 @@ history as (
     select *
     from {{ ref('int_listing_history') }}
 
+),
+
+loc_features as (
+
+    select *
+    from {{ ref('int_listing_location_features') }}
+    where snapshot_date = '2026-06-30'
+
 )
 
 select
@@ -51,11 +59,22 @@ select
     p.bathrooms_cleansed as bathrooms,
     p.instant_bookable,
 
-    -- 2. Konum ve Merkeze Uzaklık
+    -- 2. Konum, Merkeze Uzaklık, Raylı Sistem ve Başlık Abartısı Testi
     p.dist_taksim_km,
     p.dist_sultanahmet_km,
     p.min_center_km,
     p.center_distance_band,
+    lf.nearest_rail_station,
+    lf.nearest_rail_line,
+    lf.nearest_rail_type,
+    lf.dist_nearest_rail_m,
+    lf.rail_distance_band,
+    lf.claims_taksim_in_title,
+    lf.claims_sultanahmet_in_title,
+    lf.claims_galata_in_title,
+    lf.claims_bosphorus_in_title,
+    lf.title_location_claim_status,
+    lf.is_title_location_exaggerated,
 
     -- 3. Host ve Portföy Segmenti
     p.host_id,
@@ -144,3 +163,5 @@ left join amenities a
     on p.listing_snapshot_id = a.listing_snapshot_id
 left join history h
     on p.listing_id = h.listing_id
+left join loc_features lf
+    on p.listing_snapshot_id = lf.listing_snapshot_id

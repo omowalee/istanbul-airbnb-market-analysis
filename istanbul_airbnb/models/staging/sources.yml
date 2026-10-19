@@ -35,3 +35,7 @@ sources:
         description: "31 Mart 2026 tarihli kısmi reviews snapshot'ı."
       - name: raw_reviews_20260630
         description: "30 Haziran 2026 tarihli reviews snapshot'ı."
+
+      # Semt sınırları (GeoJSON -> JSON tablosu)
+      - name: raw_neighbourhoods
+        description: "İstanbul'un 39 ilçesinin GeoJSON poligon sınırları."
