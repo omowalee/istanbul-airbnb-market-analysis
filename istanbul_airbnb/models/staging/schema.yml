@@ -1,0 +1,77 @@
+version: 2
+
+models:
+  - name: stg_listings
+    description: "4 snapshot (Eylül 2025, Aralık 2025, Mart 2026, Haziran 2026) listings tablolarının birleştirilmiş, tip uyuşmazlıkları giderilmiş ve izin belgesi kategorileri ayrıştırılmış staging görünümü."
+    columns:
+      - name: listing_snapshot_id
+        description: "listing_id ve snapshot_date birleşiminden oluşan tekil satır anahtarı."
+        tests:
+          - unique
+          - not_null
+      - name: snapshot_date
+        description: "Verinin çekildiği snapshot tarihi (2025-09-29, 2025-12-30, 2026-03-31, 2026-06-30)."
+        tests:
+          - not_null
+      - name: is_partial_snapshot
+        description: "Mart 2026 (~14 bin ilan) kısmi snapshot'ı için TRUE, tam snapshot'lar için FALSE."
+        tests:
+          - not_null
+      - name: listing_id
+        description: "Airbnb tekil ilan kimliği."
+        tests:
+          - not_null
+      - name: host_id
+        description: "Airbnb tekil ev sahibi (host) kimliği."
+        tests:
+          - not_null
+      - name: neighbourhood
+        description: "Temizlenmiş ilçe adı (neighbourhood_cleansed)."
+        tests:
+          - not_null
+      - name: room_type
+        description: "Oda tipi (Entire home/apt, Private room, Hotel room, Shared room)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Entire home/apt', 'Private room', 'Hotel room', 'Shared room']
+      - name: price
+        description: "Gecelik fiyat (TL cinsinden, FLOAT64). Aralık 2025 snapshot'ında tamamen NULL."
+      - name: price_quote_nights
+        description: "2026 snapshot'larında sahte rezervasyon teklifinin gece sayısı (checkout - checkin)."
+      - name: license_category
+        description: "Regex ile ayrıştırılmış izin/lisans numarası kategorisi."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['izin_belgesi', 'yil_formatli', 'konut_disi', 'sadece_rakam', 'muaf', 'bos', 'diger']
+
+  - name: stg_calendar
+    description: "4 snapshot takvim (calendar) tablolarının birleştirilmiş staging görünümü. available=false rezervasyon değil 'kapalı gün' (is_closed_day) olarak işaretlenir."
+    columns:
+      - name: snapshot_date
+        description: "Takvim snapshot tarihi."
+      - name: listing_id
+        description: "İlan kimliği."
+      - name: calendar_date
+        description: "Takvim günü."
+      - name: is_closed_day
+        description: "Takvimde kapalı gün ise 1 (available=false), açık ise 0 (available=true)."
+      - name: is_weekend_night
+        description: "Cuma veya Cumartesi gecesi ise TRUE, hafta içi ise FALSE."
+
+  - name: stg_reviews
+    description: "4 snapshot yorum (reviews) tablolarının birleştirilmiş staging görünümü."
+    columns:
+      - name: review_snapshot_id
+        description: "review_id ve snapshot_date birleşiminden oluşan tekil anahtar."
+      - name: snapshot_date
+        description: "Yorum snapshot tarihi."
+      - name: review_id
+        description: "Tekil yorum kimliği."
+      - name: listing_id
+        description: "Yorumun yapıldığı ilan kimliği."
+      - name: review_date
+        description: "Yorum tarihi."

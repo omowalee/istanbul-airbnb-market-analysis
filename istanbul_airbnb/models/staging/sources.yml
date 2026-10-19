@@ -1,0 +1,37 @@
+version: 2
+
+sources:
+  - name: istanbul_airbnb_raw
+    description: "Inside Airbnb İstanbul ham veri tabloları (4 snapshot: Eylül 2025, Aralık 2025, Mart 2026, Haziran 2026). Auto-detect şema ile GCS'ten yüklendi."
+    database: istanbul-airbnb
+    schema: istanbul_airbnb_raw
+    tables:
+      # Listings tabloları
+      - name: raw_listings_20250929
+        description: "29 Eylül 2025 tarihli listings snapshot'ı (30.051 ilan)."
+      - name: raw_listings_20251230
+        description: "30 Aralık 2025 tarihli listings snapshot'ı (30.465 ilan)."
+      - name: raw_listings_20260331
+        description: "31 Mart 2026 tarihli kısmi listings snapshot'ı (14.340 ilan)."
+      - name: raw_listings_20260630
+        description: "30 Haziran 2026 tarihli listings snapshot'ı (26.631 ilan)."
+
+      # Calendar tabloları
+      - name: raw_calendar_20250929
+        description: "29 Eylül 2025 tarihli calendar snapshot'ı (365 günlük takvim penceresi)."
+      - name: raw_calendar_20251230
+        description: "30 Aralık 2025 tarihli calendar snapshot'ı."
+      - name: raw_calendar_20260331
+        description: "31 Mart 2026 tarihli kısmi calendar snapshot'ı."
+      - name: raw_calendar_20260630
+        description: "30 Haziran 2026 tarihli calendar snapshot'ı."
+
+      # Reviews tabloları
+      - name: raw_reviews_20250929
+        description: "29 Eylül 2025 tarihli reviews snapshot'ı."
+      - name: raw_reviews_20251230
+        description: "30 Aralık 2025 tarihli reviews snapshot'ı."
+      - name: raw_reviews_20260331
+        description: "31 Mart 2026 tarihli kısmi reviews snapshot'ı."
+      - name: raw_reviews_20260630
+        description: "30 Haziran 2026 tarihli reviews snapshot'ı."
